@@ -1,0 +1,34 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: onlinesubdb
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d:ro
+    ports:
+      - 5432:5432
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    environment:
+      CONFIG_PATH: ./config/local.yaml
+      POSTGRES_HOST: onlinesubscription-db-1
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: onlinesubdb
+      APP_ENV: local
+    ports:
+      - 8080:8080
+
+volumes:
+  db_data:
+

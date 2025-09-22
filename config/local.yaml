@@ -1,6 +1,13 @@
-env: "local"
-storage_path: "./storage/storage.db"
+env: "local" #local, dev, prod
 http_server:
-  address: "localhost:8080"
+  address: "0.0.0.0:8080"
   timeout: 5s
   idle_timeout: 60s
+
+database:
+  address: "localhost:5432"
+  name: "onlineSub_db"
+  user: "postgres"
+  password: "password"
+  sslmode: "disable"
+  
